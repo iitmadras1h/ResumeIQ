@@ -1,20 +1,27 @@
 import streamlit as st
 from resume_analyzer import ResumeAnalyzer
 import requests
+import PyPDF2
 
 analyzer = ResumeAnalyzer()
 
 st.title("🚀 ResumeIQ")
 
-uploaded_file = st.file_uploader("Upload Resume", type=["txt"])
-use_sample = st.checkbox("Use Sample Resume")
 
-use_job_desc = st.checkbox("Use Job Description")
+
+uploaded_file = st.file_uploader("Upload Resume", type=["txt", "pdf"])
 
 resume_text = ""
 
 if uploaded_file:
-    resume_text = uploaded_file.read().decode("utf-8")
+
+    if uploaded_file.type == "application/pdf":
+        pdf_reader = PyPDF2.PdfReader(uploaded_file)
+        for page in pdf_reader.pages:
+            resume_text += page.extract_text()
+
+    else:
+        resume_text = uploaded_file.read().decode("utf-8")
 
 elif use_sample:
     with open("example_resume.txt", "r") as f:
