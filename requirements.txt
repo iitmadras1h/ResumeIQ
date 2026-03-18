@@ -1,5 +1,6 @@
-streamlit
-fastapi
-uvicorn
-razorpay
-requests
+streamlit==1.32.0
+fastapi==0.110.0
+uvicorn==0.29.0
+razorpay==1.4.2
+requests==2.31.0
+PyPDF2==3.0.1
